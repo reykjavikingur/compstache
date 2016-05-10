@@ -104,6 +104,23 @@ describe('Compstache', function() {
 
 	});
 
+	describe('given cache with inclusion having interpolation', function() {
+		var cache, render;
+		beforeEach(function() {
+			cache = {
+				header: 'Title = {{t}}',
+				doc: 'J {{>header}} K'
+			};
+			render = Compstache(cache);
+		});
+		it('should be able to interpolate in inclusion', function() {
+			var output = render('doc', {
+				t: 'Page'
+			});
+			should(output).eql('J Title = Page K');
+		});
+	});
+
 	describe('given cache with transclusion having zero slots', function() {
 
 		var cache;
@@ -264,7 +281,7 @@ describe('Compstache', function() {
 
 	});
 
-	describe.skip('given cache with transclusion used with extension syntax', function() {
+	describe('given cache with transclusion used with extension syntax', function() {
 
 		var cache, render;
 
@@ -278,6 +295,40 @@ describe('Compstache', function() {
 
 		it('should be able to render', function() {
 			should(render('doc')).eql('S M xyz N T');
+		});
+	});
+
+	describe('given cache with transclusion having two slots', function() {
+
+		var cache, render;
+
+		beforeEach(function() {
+			cache = {
+				layout: 'L {{$}} M {{$}} N',
+				doc: 'S {{#>layout}}{{#_}}abc{{/_}} {{#_}}xyz{{/_}}{{/>layout}} T'
+			};
+			render = Compstache(cache);
+		});
+
+		it('should be able to render transclusion with both slots', function() {
+			should(render('doc')).eql('S L abc M xyz N T');
+		});
+
+	});
+
+	describe('given cache with nested transclusions using extension syntax', function() {
+		var cache, render;
+		beforeEach(function() {
+			cache = {
+				widget: 'W {{$}} J',
+				layout: 'M {{#>widget}}{{#_}}m {{$}} n{{/_}}{{/>widget}} N',
+				doc: 'S {{#>layout}}{{#_}}xyz{{/_}}{{/>layout}} T'
+			};
+			render = Compstache(cache);
+		});
+
+		it('should be able to render multiple layers', function() {
+			should(render('doc')).eql('S M W m xyz n J N T');
 		});
 	});
 
