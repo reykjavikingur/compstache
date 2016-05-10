@@ -24,6 +24,28 @@ describe('Compstache', function() {
 
 	});
 
+	describe('rendering from string', function() {
+
+		var render;
+		beforeEach(function() {
+			render = Compstache({});
+		});
+
+		it('should be able to render string without interpolations', function() {
+			var output = render.fromString('foo bar');
+			should(output).eql('foo bar');
+		});
+
+		it('should be able to render string with interpolations', function() {
+			var template = 'This is a {{condition}} document.';
+			var output = render.fromString(template, {
+				condition: 'great'
+			});
+			should(output).eql('This is a great document.');
+		});
+
+	});
+
 	describe('given cache with one template without interpolation', function() {
 
 		var cache;
@@ -42,6 +64,12 @@ describe('Compstache', function() {
 
 			it('should render from cache', function() {
 				should(render('foo')).eql('hey');
+			});
+
+			it('should render from string', function() {
+				var template = 'I say: {{>foo}} there';
+				var output = render.fromString(template);
+				should(output).eql('I say: hey there');
 			});
 
 		});
@@ -166,6 +194,12 @@ describe('Compstache', function() {
 			it('should render and transclude', function() {
 				var output = render('doc');
 				should(output).eql('S M xyz N T')
+			});
+
+			it('should render from string and transclude', function() {
+				var template = cache.doc;
+				var output = render.fromString(template);
+				should(output).eql('S M xyz N T');
 			});
 
 		});
