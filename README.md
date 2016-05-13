@@ -9,7 +9,9 @@ var Compstache = require('compstache');
 
 var cache = {
 	button: '<button>Click here</button>',
-	layout: '<html><body>Welcome to {{title}}. {{>button}} <div>{{$}}</div> <hr/> Copyright &copy; 2016 </body></html>',
+	layout: '<html><body>Welcome to {{title}}. ' +
+		'{{>button}} <div>{{{$}}}</div> ' +
+		'<hr/> Copyright &copy; 2016 </body></html>',
 	home: '{{#>layout}}This site is all about {{topic}}.{{/>layout}}'
 };
 
@@ -38,9 +40,9 @@ For instance, `{{>button}}` renders as the template string in `cache['button']`.
 
 ### Layout Components
 
-A layout component is simply a "section" (in the Mustache sense) that matches a component name in `cache` that has one or more slots marked by `{{$}}`.
+A layout component is simply a "section" (in the Mustache sense) that matches a component name in `cache` that has one or more slots marked by `{{{$}}}`.
 
-For instance, if `cache['layout']` is `start {{$}} finish`, then `{{#>layout}}content{{/>layout}}` renders as the template string with the inner content being injected into the slot, that is, "start content finish".
+For instance, if `cache['layout']` is `start {{{$}}} finish`, then `{{#>layout}}content{{/>layout}}` renders as the template string with the inner content being injected into the slot, that is, "start content finish".
 
 ### Multi-slot Layout Components
 
