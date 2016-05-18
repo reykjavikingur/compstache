@@ -1,11 +1,12 @@
 var express = require('express');
-var compstacheEngine = require('../lib/express-view-engine');
+var Compstache = require('..');
+//var compstacheEngine = require('../lib/express-view-engine');
 
 var app = express();
 
 var port = process.env.PORT || 3000;
 
-app.engine('html', compstacheEngine);
+app.engine('html', Compstache.__express);
 app.set('views', __dirname + '/views');
 app.set('view engine', 'html');
 
