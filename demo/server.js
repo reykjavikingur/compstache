@@ -1,6 +1,5 @@
 var express = require('express');
 var Compstache = require('..');
-//var compstacheEngine = require('../lib/express-view-engine');
 
 var app = express();
 

@@ -47,3 +47,14 @@ For instance, if `cache['layout']` is `start {{{$}}} finish`, then `{{#>layout}}
 ### Multi-slot Layout Components
 
 A layout component can have more than one slot. You can pass the content for multiple slots by wrapping them in `{{#_}}` and `{{/_}}` markers.
+
+## Example: Express View Engine
+
+You can use Compstache as the view engine for an Express server. The following example shows a configuration to render HTML templates in a `views` directory.
+
+```
+var app = require('express')();
+app.engine('html', require('compstache').__express);
+app.set('views', __dirname + '/views');
+app.set('view engine', 'html');
+```
