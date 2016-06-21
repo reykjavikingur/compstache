@@ -103,6 +103,17 @@ describe('Compstache', function () {
 				should(render('foo', data)).eql('It is basic here');
 			});
 
+			it('should render from cache and interpolate new values', function () {
+				var dataA = {
+					condition: 'moderate'
+				};
+				var dataB = {
+					condition: 'advanced'
+				};
+				render('foo', dataA);
+				should(render('foo', dataB)).eql('It is advanced here');
+			});
+
 		});
 
 	});
