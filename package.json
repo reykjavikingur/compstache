@@ -1,6 +1,6 @@
 {
   "name": "compstache",
-  "version": "1.1.0",
+  "version": "1.1.1",
   "description": "Template rendering engine based on Mustache with support for component-based design",
   "main": "index.js",
   "scripts": {
